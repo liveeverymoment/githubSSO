@@ -1,3 +1,5 @@
 from django.contrib import admin
+from login.models import CustomerOptions,Oidcclient
 
-# Register your models here.
+admin.site.register(CustomerOptions)
+admin.site.register(Oidcclient)
