@@ -1,3 +1,5 @@
 *.pyc
 /githubssovenv/
 000*
+db*
+db.sqlite3*

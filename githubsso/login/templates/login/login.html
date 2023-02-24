@@ -4,6 +4,8 @@
         <title></title>
     </head>
     <body>
-        <button><a href="">Login with {{ IDP }}</a></button>
+        <form id="github-sso-form" action="/login/sso/" method="post">
+        <button type="submit" form="github-sso-form">Login with {{ IDP }}</button>
+        </form>
     </body>
 </html>
