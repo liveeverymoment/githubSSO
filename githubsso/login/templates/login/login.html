@@ -1,11 +1,14 @@
 {% load static %}
 <html>
     <head>
-        <title></title>
+        <link href="{% static 'login.scss' %}" rel="stylesheet">
+        <title>Github SSO</title>
     </head>
     <body>
-        <form id="github-sso-form" action="/login/sso/" method="post">
-        <button type="submit" form="github-sso-form">Login with {{ IDP }}</button>
+        <h1>Hi, {{user.username}}</h1>
+        <form id="github-sso-form" action="{% url 'login_page' pk=user.pk %}" method="post">
+            {% csrf_token %}
+        <button type="submit" class="idp-submit-btn" form="github-sso-form">Login with {{ IDP }}</button>
         </form>
     </body>
 </html>

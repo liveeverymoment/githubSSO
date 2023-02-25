@@ -7,33 +7,35 @@ from rest_framework.renderers import TemplateHTMLRenderer
 import hashlib
 from django.shortcuts import redirect 
 from urllib.parse import urlencode 
+from django.shortcuts import get_object_or_404
 from githubsso import settings
 from login.models import CustomerOptions
 from login.models import Oidcclient
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
+from users.models import User
 
-@method_decorator(csrf_exempt,name='dispatch')
 class LoginAPIView(APIView):
     """
     API view for login page.
     """
     renderer_classes=(TemplateHTMLRenderer,)
+    template_name='login/login.html'
     
-    def get(self,request):
+    def get(self,request,pk):
+        user=get_object_or_404(User,pk=pk)
         customer_object=CustomerOptions.objects.get(key='oauthserver')
         oauthserver=customer_object.value
         data={
-            'IDP':oauthserver
+            'IDP':oauthserver,
+            'user':user
         }
-        return Response(template_name='login/login.html',data=data)
+        return Response(data=data)
 
-    def post(self,request):
+    def post(self,request,pk):
         """
         Initiates SSO for configured IDP.
         """
-        print('inside post.')
-        state=hashlib.md5((settings.SECRET_KEY).encode('utf-8').hexdigest())
+        user=get_object_or_404(User,pk=pk)
+        state=hashlib.md5(str(settings.SECRET_KEY).encode()).hexdigest()
         customer_objects=CustomerOptions.objects.get(key='oauthappname')
         oauthapp=customer_objects.value
         oidc_object=Oidcclient.objects.get(application_name=oauthapp)
@@ -53,6 +55,7 @@ class LoginAPIView(APIView):
         response["Access-Control-Allow-Methods"]="GET"
         response.status_code=302
         return response
+
 
 class GetAccessCodeView(APIView):
     """

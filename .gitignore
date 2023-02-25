@@ -1,5 +1,4 @@
 *.pyc
 /githubssovenv/
 000*
-db*
-db.sqlite3*
+.vscode/launch.json
