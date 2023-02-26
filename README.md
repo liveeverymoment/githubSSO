@@ -2,8 +2,7 @@
 Github SSO OAuth Authorization flow Django Django-rest-framework
 
 To run:
-## Fork this repo.
-### Clone repo.
+### Clone repo
 1. Open project.
   * Activate virtual environment:
 ```
