@@ -6,9 +6,11 @@
     </head>
     <body>
         <h1>Hi, {{user.username}}</h1>
+        {% if IDP %}
         <form id="github-sso-form" action="{% url 'login_page' pk=user.pk %}" method="post">
             {% csrf_token %}
         <button type="submit" class="idp-submit-btn" form="github-sso-form">Login with {{ IDP }}</button>
         </form>
+        {% endif %}
     </body>
 </html>
