@@ -2,3 +2,4 @@
 /githubssovenv/
 000*
 .vscode/launch.json
+githubSSO/githubsso/db.sqlite3
